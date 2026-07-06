@@ -62,6 +62,43 @@ interface SearchParams extends PaginationParams {
   amountRange?: string;
 }
 
+// ====== 企业申报规划 ======
+
+/** 企业信息（企查查返回） */
+interface EnterpriseInfo {
+  name: string;
+  creditCode: string;
+  legalPerson: string;
+  registeredCapital: string;
+  establishDate: string;
+  industry: string;
+  address: string;
+  businessScope: string;
+  status: string;
+}
+
+/** 申报规划中的单条政策 */
+interface PlanItem {
+  policyName: string;
+  department: string;
+  matchReason: string;
+  amount: string;
+  deadline: string;
+  difficulty: '低' | '中等' | '高';
+  steps: string[];
+  url: string;
+}
+
+/** 申报规划结果 */
+interface PlanResult {
+  enterprise: EnterpriseInfo;
+  plan: {
+    totalPolicies: number;
+    totalAmount: string;
+    items: PlanItem[];
+  };
+}
+
 // ====== 类型导出（供全局使用） ======
 declare type ApiRes<T = unknown> = ApiResponse<T>;
 declare type PageParams = PaginationParams;

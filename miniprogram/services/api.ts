@@ -89,3 +89,15 @@ export const searchApi = {
     });
   },
 };
+
+// ====== 企业申报规划 ======
+export const enterpriseApi = {
+  /** 查询企业申报规划 */
+  getPlan(enterpriseName: string) {
+    return request<PlanResult>({
+      url: '/enterprise/plan',
+      method: 'POST',
+      data: { enterpriseName },
+    });
+  },
+};

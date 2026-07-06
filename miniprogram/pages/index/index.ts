@@ -1,104 +1,89 @@
-import { policyApi } from '../../services/api';
-
-const CATEGORIES = [
-  { label: '全部', value: '' },
-  { label: '科技', value: 'tech' },
-  { label: '财税', value: 'finance' },
-  { label: '人才', value: 'talent' },
-  { label: '产业', value: 'industry' },
-];
+import { enterpriseApi } from '../../services/api';
 
 Page({
   data: {
-    categories: CATEGORIES,
-    activeCategory: '',
-    policyList: [] as Policy[],
-    page: 1,
-    pageSize: 10,
-    total: 0,
-    hasMore: true,
+    enterpriseName: '',
+    inputFocus: false,
     loading: false,
+    hasResult: false,
+    errorMsg: '',
+    result: null as PlanResult | null,
   },
 
-  onLoad() {
-    this.fetchPolicies();
+  // 输入变化
+  onInput(e: WechatMiniprogram.Input) {
+    this.setData({ enterpriseName: e.detail.value, errorMsg: '' });
   },
 
-  onPullDownRefresh() {
-    this.setData({ page: 1, policyList: [], hasMore: true });
-    this.fetchPolicies().then(() => wx.stopPullDownRefresh());
+  // 输入框聚焦/失焦（用于边框高亮）
+  onFocus() {
+    this.setData({ inputFocus: true });
   },
 
-  onReachBottom() {
-    if (this.data.hasMore && !this.data.loading) {
-      this.fetchPolicies();
-    }
+  onBlur() {
+    this.setData({ inputFocus: false });
   },
 
-  // 切换分类
-  onCategoryChange(e: WechatMiniprogram.TouchEvent) {
-    const { value } = e.currentTarget.dataset;
-    if (value === this.data.activeCategory) return;
+  // 清除输入
+  onClear() {
     this.setData({
-      activeCategory: value,
-      page: 1,
-      policyList: [],
-      hasMore: true,
+      enterpriseName: '',
+      hasResult: false,
+      result: null,
+      errorMsg: '',
+      inputFocus: false,
     });
-    this.fetchPolicies();
   },
 
-  // 获取政策列表
-  async fetchPolicies() {
-    if (this.data.loading) return;
-    this.setData({ loading: true });
+  // 搜索提交
+  onSearch() {
+    const name = this.data.enterpriseName.trim();
+    if (!name) {
+      wx.showToast({ title: '请输入企业名称', icon: 'none' });
+      return;
+    }
 
+    if (name.length < 4) {
+      wx.showToast({ title: '请输入完整的企业名称', icon: 'none' });
+      return;
+    }
+
+    this.setData({ loading: true, errorMsg: '', result: null, hasResult: false });
+    this.fetchPlan(name);
+  },
+
+  // 调用后端接口
+  async fetchPlan(enterpriseName: string) {
     try {
-      const res = await policyApi.getList({
-        page: this.data.page,
-        pageSize: this.data.pageSize,
-        category: this.data.activeCategory || undefined,
+      const res = await enterpriseApi.getPlan(enterpriseName);
+
+      this.setData({
+        loading: false,
+        hasResult: true,
+        result: res.data as PlanResult,
       });
 
-      const { list, total } = res.data;
-      this.setData({
-        policyList: this.data.page === 1 ? list : [...this.data.policyList, ...list],
-        total,
-        hasMore: this.data.policyList.length + list.length < total,
-        page: this.data.page + 1,
-        loading: false,
-      });
+      // 滚动到结果区域
+      wx.pageScrollTo({ scrollTop: 0, duration: 300 });
     } catch {
-      this.setData({ loading: false });
+      this.setData({
+        loading: false,
+        errorMsg: '查询失败，请确认企业名称正确后重试',
+      });
     }
   },
 
-  // 点击政策卡片
-  onPolicyTap(e: WechatMiniprogram.TouchEvent) {
-    const { id } = e.currentTarget.dataset;
-    wx.navigateTo({ url: `/pages/detail/detail?id=${id}` });
-  },
-
-  // 收藏/取消收藏
-  async onToggleFavorite(e: WechatMiniprogram.CustomEvent) {
-    const { id, isFavorite } = e.detail;
-    try {
-      await policyApi.toggleFavorite(id, isFavorite);
-
-      // 本地更新状态
-      const index = this.data.policyList.findIndex((p) => p.id === id);
-      if (index !== -1) {
-        this.setData({
-          [`policyList[${index}].isFavorite`]: !isFavorite,
-        });
-      }
-
-      wx.showToast({
-        title: isFavorite ? '已取消收藏' : '已收藏',
-        icon: 'success',
+  // 查看政策原文
+  onOpenLink(e: WechatMiniprogram.TouchEvent) {
+    const { url } = e.currentTarget.dataset;
+    if (url) {
+      // 在 web-view 或复制链接
+      wx.setClipboardData({
+        data: url,
+        success() {
+          wx.showToast({ title: '链接已复制，请在浏览器中打开', icon: 'none' });
+        },
       });
-    } catch {
-      // 请求层已处理提示
     }
   },
 });

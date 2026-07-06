@@ -1,34 +1,141 @@
-<!-- 博友政策咨询 — 首页 -->
+<!-- 博友政策咨询 — 首页：企业申报规划查询 -->
 <view class="page-index">
-  <!-- 分类筛选 -->
-  <view class="filter-bar">
-    <view
-      wx:for="{{categories}}"
-      wx:key="value"
-      class="filter-item {{activeCategory === item.value ? 'active' : ''}}"
-      data-value="{{item.value}}"
-      bind:tap="onCategoryChange"
-    >
-      {{item.label}}
+  <!-- 搜索区域 -->
+  <view class="search-hero {{hasResult ? 'has-result' : ''}}">
+    <!-- 未搜索时显示 Logo -->
+    <block wx:if="{{!hasResult}}">
+      <view class="hero-logo">🔍</view>
+      <text class="hero-title">博友政策咨询</text>
+      <text class="hero-subtitle">输入企业名称，一键生成申报规划</text>
+    </block>
+
+    <!-- 搜索框 -->
+    <view class="search-box {{inputFocus ? 'focused' : ''}}">
+      <text class="search-icon">🔍</text>
+      <input
+        class="search-input"
+        placeholder="请输入企业全称，如：深圳市某某科技有限公司"
+        value="{{enterpriseName}}"
+        confirm-type="search"
+        bind:input="onInput"
+        bind:focus="onFocus"
+        bind:blur="onBlur"
+        bind:confirm="onSearch"
+        maxlength="100"
+      />
+      <text wx:if="{{enterpriseName}}" class="search-clear" bind:tap="onClear">✕</text>
+      <button
+        class="search-btn"
+        disabled="{{!enterpriseName || loading}}"
+        bind:tap="onSearch"
+      >
+        {{loading ? '查询中' : '查询'}}
+      </button>
+    </view>
+
+    <!-- 加载动画 -->
+    <view wx:if="{{loading}}" class="search-loading">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">正在分析企业信息，匹配深圳政策...</text>
     </view>
   </view>
 
-  <!-- 政策列表 -->
-  <view class="policy-list">
-    <block wx:if="{{policyList.length > 0}}">
-      <policy-card
-        wx:for="{{policyList}}"
-        wx:key="id"
-        policy="{{item}}"
-        bind:tap="onPolicyTap"
-        bind:favorite="onToggleFavorite"
-      />
-      <view wx:if="{{hasMore}}" class="load-more">加载更多...</view>
+  <!-- 错误状态 -->
+  <view wx:if="{{errorMsg}}" class="error-card">
+    <view class="error-icon">😕</view>
+    <view class="error-text">{{errorMsg}}</view>
+    <text class="retry-btn" bind:tap="onSearch">重新查询</text>
+  </view>
+
+  <!-- 查询结果 -->
+  <view wx:if="{{result && !loading && !errorMsg}}" class="result-section">
+    <!-- 企业信息卡片 -->
+    <view class="enterprise-card">
+      <view class="card-title">🏢 {{result.enterprise.name}}</view>
+      <view class="info-grid">
+        <view class="info-item">
+          <text class="info-label">统一社会信用代码</text>
+          <text class="info-value">{{result.enterprise.creditCode || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">法定代表人</text>
+          <text class="info-value">{{result.enterprise.legalPerson || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">注册资本</text>
+          <text class="info-value">{{result.enterprise.registeredCapital || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">成立日期</text>
+          <text class="info-value">{{result.enterprise.establishDate || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">所属行业</text>
+          <text class="info-value">{{result.enterprise.industry || '-'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">经营状态</text>
+          <text class="info-value">{{result.enterprise.status || '-'}}</text>
+        </view>
+        <view class="info-item" style="width:100%">
+          <text class="info-label">注册地址</text>
+          <text class="info-value">{{result.enterprise.address || '-'}}</text>
+        </view>
+        <view class="info-item" style="width:100%">
+          <text class="info-label">经营范围</text>
+          <text class="info-value">{{result.enterprise.businessScope || '-'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 规划概览 -->
+    <view class="plan-summary">
+      <view class="summary-item">
+        <view class="summary-num">{{result.plan.totalPolicies}}</view>
+        <view class="summary-tag">可申报政策</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-num">{{result.plan.totalAmount}}</view>
+        <view class="summary-tag">预估补贴</view>
+      </view>
+    </view>
+
+    <!-- 逐条政策 -->
+    <block wx:for="{{result.plan.items}}" wx:key="policyName">
+      <view class="policy-item">
+        <view class="policy-header">
+          <text class="policy-name">{{item.policyName}}</text>
+          <text wx:if="{{item.amount}}" class="amount-tag">{{item.amount}}</text>
+        </view>
+
+        <view class="match-reason">📌 {{item.matchReason}}</view>
+
+        <view class="policy-meta">
+          <view class="meta-row">🏛 {{item.department}}</view>
+          <view class="meta-row">📅 截止：{{item.deadline}}</view>
+          <view class="meta-row">
+            难度：
+            <text
+              class="difficulty-tag {{item.difficulty === '低' ? 'low' : item.difficulty === '中等' ? 'mid' : 'high'}}"
+            >{{item.difficulty}}</text>
+          </view>
+        </view>
+
+        <view class="steps-section">
+          <view class="step-title">📋 申报步骤</view>
+          <view class="step-item" wx:for="{{item.steps}}" wx:key="*this" wx:for-item="step">
+            <view class="step-dot"></view>
+            <text class="step-text">{{step}}</text>
+          </view>
+        </view>
+
+        <text wx:if="{{item.url}}" class="policy-link" bind:tap="onOpenLink" data-url="{{item.url}}">查看政策原文 →</text>
+      </view>
     </block>
 
-    <view wx:else class="empty-state">
-      <text class="empty-icon">📋</text>
-      <text class="empty-text">暂无相关政策</text>
+    <!-- 底部提示 -->
+    <view class="footer-tip">
+      💡 以上规划基于深圳市现行政策，实际申报以官方最新通知为准
     </view>
   </view>
 </view>

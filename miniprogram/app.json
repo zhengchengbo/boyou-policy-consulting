@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/search/search",
+    "pages/detail/detail"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#1677FF",
+    "navigationBarTitleText": "博友政策咨询",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F5F5F5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1677FF",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "政策",
+        "iconPath": "assets/icons/policy.png",
+        "selectedIconPath": "assets/icons/policy-active.png"
+      },
+      {
+        "pagePath": "pages/search/search",
+        "text": "搜索",
+        "iconPath": "assets/icons/search.png",
+        "selectedIconPath": "assets/icons/search-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

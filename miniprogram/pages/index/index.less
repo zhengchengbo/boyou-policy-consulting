@@ -1,0 +1,61 @@
+@import '../../styles/variables.less';
+
+.page-index {
+  min-height: 100vh;
+}
+
+// 顶部筛选栏
+.filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: @white;
+  padding: @spacing-sm @spacing-md;
+  display: flex;
+  gap: @spacing-sm;
+
+  .filter-item {
+    .flex-center();
+    padding: @spacing-xs @spacing-md;
+    background: @bg-color;
+    border-radius: @radius-md;
+    font-size: @font-sm;
+    color: @text-secondary;
+
+    &.active {
+      background: @primary-color;
+      color: @white;
+    }
+  }
+}
+
+// 政策列表
+.policy-list {
+  padding: 0 @spacing-md;
+  padding-bottom: @spacing-lg;
+}
+
+// 加载更多
+.load-more {
+  .flex-center();
+  padding: @spacing-lg 0;
+  color: @text-secondary;
+  font-size: @font-sm;
+}
+
+// 空状态
+.empty-state {
+  .flex-center();
+  flex-direction: column;
+  padding-top: 120rpx;
+
+  .empty-icon {
+    font-size: 80rpx;
+    margin-bottom: @spacing-md;
+  }
+
+  .empty-text {
+    color: @text-secondary;
+    font-size: @font-sm;
+  }
+}

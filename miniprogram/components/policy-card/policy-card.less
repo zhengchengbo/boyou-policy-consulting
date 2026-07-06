@@ -1,0 +1,80 @@
+@import '../../styles/variables.less';
+
+.policy-card {
+  background: @white;
+  border-radius: @radius-md;
+  padding: @spacing-md;
+  margin-top: @spacing-sm;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: @spacing-xs;
+
+    .card-title {
+      flex: 1;
+      font-size: @font-lg;
+      font-weight: 600;
+      color: @text-color;
+      .ellipsis();
+    }
+
+    .card-amount {
+      font-size: @font-lg;
+      font-weight: 700;
+      color: @danger-color;
+      white-space: nowrap;
+      margin-left: @spacing-sm;
+    }
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: @spacing-xs;
+    margin-bottom: @spacing-sm;
+
+    .meta-tag {
+      font-size: @font-xs;
+      color: @primary-color;
+      background: lighten(@primary-color, 42%);
+      padding: 2rpx @spacing-xs;
+      border-radius: @radius-sm;
+    }
+  }
+
+  .card-summary {
+    font-size: @font-sm;
+    color: @text-secondary;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    margin-bottom: @spacing-sm;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: @font-xs;
+    color: @text-secondary;
+
+    .footer-left {
+      display: flex;
+      gap: @spacing-md;
+    }
+
+    .favorite-btn {
+      color: @warning-color;
+      font-size: @font-sm;
+
+      &.favorited {
+        color: @warning-color;
+      }
+    }
+  }
+}

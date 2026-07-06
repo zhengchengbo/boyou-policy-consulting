@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "policy-card": "/components/policy-card/policy-card"
+  },
+  "navigationBarTitleText": "博友政策咨询",
+  "enablePullDownRefresh": true
+}

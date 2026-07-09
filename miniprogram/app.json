@@ -4,10 +4,9 @@
   ],
   "window": {
     "navigationBarBackgroundColor": "#FFFFFF",
-    "navigationBarTitleText": "博友政策咨询",
+    "navigationBarTitleText": "企业申报规划书",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#F5F5F5",
-    "navigationStyle": "custom"
+    "backgroundColor": "#F5F5F5"
   },
   "sitemapLocation": "sitemap.json"
 }

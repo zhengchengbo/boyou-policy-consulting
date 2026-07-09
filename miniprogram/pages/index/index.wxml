@@ -1,82 +1,89 @@
-<!-- 博友政策咨询 — 极简版首页 -->
-<view class="page-index">
-  <!-- 搜索区域：未查询时居中，查询后置顶 -->
-  <view class="search-area {{hasResult ? 'has-result' : ''}}">
-    <!-- 品牌标识（仅初始状态） -->
-    <view wx:if="{{!hasResult}}" class="brand">
-      <text class="brand-icon">📋</text>
-      <text class="brand-name">博友政策咨询</text>
-      <text class="brand-slogan">输入企业名称，获取申报计划书</text>
-    </view>
+<!-- 博友政策咨询 — 极简搜索 + 计划书 -->
+<view class="page">
+  <!-- ====== 搜索阶段（居中） ====== -->
+  <view class="section-search {{hasResult ? 'pinned' : ''}}">
+    <view class="search-wrap">
+      <!-- 品牌区 -->
+      <view class="brand" wx:if="{{!hasResult}}">
+        <view class="brand-icon">
+          <text class="icon-text">博</text>
+        </view>
+        <text class="brand-title">博友政策咨询</text>
+        <text class="brand-desc">输入企业名称，获取申报计划书</text>
+      </view>
 
-    <!-- 搜索框 -->
-    <view class="search-box {{inputFocus ? 'focused' : ''}}">
-      <input
-        class="search-input"
-        placeholder="输入企业全称"
-        value="{{enterpriseName}}"
-        confirm-type="search"
-        bind:input="onInput"
-        bind:focus="onFocus"
-        bind:blur="onBlur"
-        bind:confirm="onSearch"
-        maxlength="100"
-      />
-      <text wx:if="{{enterpriseName && !loading}}" class="search-clear" bind:tap="onClear">✕</text>
-      <button
-        class="search-btn"
-        disabled="{{!enterpriseName || loading}}"
-        loading="{{loading}}"
-        size="mini"
-        bind:tap="onSearch"
-      >查询</button>
+      <!-- 搜索框 -->
+      <view class="input-group {{inputFocus ? 'focused' : ''}}">
+        <input
+          class="input-field"
+          placeholder="输入企业全称"
+          placeholder-style="color:#c0c0c0"
+          value="{{enterpriseName}}"
+          confirm-type="search"
+          bind:input="onInput"
+          bind:focus="onFocus"
+          bind:blur="onBlur"
+          bind:confirm="onSearch"
+          maxlength="100"
+        />
+        <text wx:if="{{enterpriseName && !loading}}" class="input-clear" bind:tap="onClear">✕</text>
+        <button
+          class="input-btn"
+          disabled="{{!enterpriseName || loading}}"
+          loading="{{loading}}"
+          size="mini"
+          bind:tap="onSearch"
+        >查询</button>
+      </view>
+
+      <!-- 加载 -->
+      <view wx:if="{{loading}}" class="loading-tip">
+        <view class="spinner"></view>
+        <text>正在为您生成申报计划...</text>
+      </view>
+
+      <!-- 错误 -->
+      <view wx:if="{{errorMsg && !loading}}" class="error-tip">
+        <text>{{errorMsg}}</text>
+        <text class="retry-btn" bind:tap="onSearch">重试</text>
+      </view>
     </view>
   </view>
 
-  <!-- 错误提示 -->
-  <view wx:if="{{errorMsg}}" class="error-tip">
-    <text>{{errorMsg}}</text>
-    <text class="retry-link" bind:tap="onSearch">重试</text>
-  </view>
-
-  <!-- 结果：申报计划书 -->
-  <view wx:if="{{result && !loading && !errorMsg}}" class="report">
+  <!-- ====== 结果阶段 ====== -->
+  <view wx:if="{{result && !loading && !errorMsg}}" class="section-result">
     <!-- 报告头部 -->
-    <view class="report-header">
-      <text class="report-title">📋 政策申报计划书</text>
-      <text class="report-enterprise">{{result.enterprise.name}}</text>
-      <view class="report-meta">
-        <text class="meta-item">匹配 {{result.plan.totalPolicies}} 项政策</text>
-        <text class="meta-divider">|</text>
-        <text class="meta-item">预估 {{result.plan.totalAmount}}</text>
+    <view class="report-head">
+      <text class="report-title">申报计划书</text>
+      <text class="report-company">{{result.enterprise.name}}</text>
+      <view class="report-stats">
+        <text class="stat-item">匹配 {{result.plan.totalPolicies}} 项</text>
+        <text class="stat-divider">·</text>
+        <text class="stat-item">预估 {{result.plan.totalAmount}}</text>
       </view>
     </view>
 
-    <!-- 政策条目 -->
-    <view class="policy-list">
-      <view class="policy-card" wx:for="{{result.plan.items}}" wx:key="policyName" wx:for-index="idx">
-        <view class="policy-index">{{idx + 1}}</view>
-        <view class="policy-body">
-          <view class="policy-title-row">
-            <text class="policy-name">{{item.policyName}}</text>
-            <text wx:if="{{item.amount}}" class="policy-amount">{{item.amount}}</text>
-          </view>
-          <view class="policy-dept">🏛 {{item.department}}</view>
-          <view class="policy-deadline">⏰ 截止：{{item.deadline}}</view>
-          <view class="policy-match">✅ {{item.matchReason}}</view>
-          <view wx:if="{{item.steps && item.steps.length > 0}}" class="policy-steps">
-            <view class="step-item" wx:for="{{item.steps}}" wx:key="*this" wx:for-item="step">
-              <text class="step-dot">·</text>
-              <text class="step-text">{{step}}</text>
-            </view>
-          </view>
+    <!-- 政策列表 -->
+    <view class="policy" wx:for="{{result.plan.items}}" wx:key="policyName" wx:for-index="idx">
+      <view class="policy-num">{{idx + 1}}</view>
+      <view class="policy-body">
+        <view class="policy-head">
+          <text class="policy-name">{{item.policyName}}</text>
+          <text wx:if="{{item.amount}}" class="policy-amt">{{item.amount}}</text>
+        </view>
+        <text class="policy-meta">🏛 {{item.department}}</text>
+        <text class="policy-meta">⏰ {{item.deadline}}</text>
+        <text class="policy-reason">✅ {{item.matchReason}}</text>
+        <view wx:if="{{item.steps && item.steps.length}}" class="policy-steps">
+          <text class="steps-label">📋 申报步骤：</text>
+          <text class="step-item" wx:for="{{item.steps}}" wx:key="*this" wx:for-item="s">· {{s}}</text>
         </view>
       </view>
     </view>
 
     <!-- 底部 -->
-    <view class="report-footer">
-      <text>以上规划基于深圳市现行政策，实际申报以官方最新通知为准</text>
+    <view class="report-foot">
+      <text>以上基于深圳市现行政策，实际以官方通知为准</text>
     </view>
   </view>
 </view>

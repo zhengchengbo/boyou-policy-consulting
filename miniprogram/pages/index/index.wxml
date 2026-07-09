@@ -1,60 +1,59 @@
-<!-- 博友政策咨询 — 重新设计 -->
+<!-- 博友政策咨询 — 正式版 -->
 <view class="page">
   <view class="hero {{hasResult ? 'compact' : ''}}">
     <view class="hero-inner">
-      <!-- 品牌 -->
-      <view class="brand" wx:if="{{!hasResult}}">
-        <text class="brand-icon">🏆</text>
-        <text class="brand-title">企业申报规划书</text>
-        <text class="brand-desc">输入企业名称，一键匹配可申报的政策补贴</text>
+      <!-- 圆形图标 -->
+      <view class="icon-circle" wx:if="{{!hasResult}}">
+        <image class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234A90FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E" mode="aspectFit" />
       </view>
 
-      <!-- 输入区 -->
-      <view class="form-card">
-        <view class="form-label">企业全称</view>
-        <view class="form-input {{inputFocus ? 'focus' : ''}}">
+      <!-- 标题 -->
+      <view class="brand" wx:if="{{!hasResult}}">
+        <text class="brand-title">博友政策咨询</text>
+        <text class="brand-desc">输入企业名称，一键生成申报规划</text>
+      </view>
+
+      <!-- 搜索卡片 -->
+      <view class="search-card">
+        <view class="search-row">
+          <text class="search-icon">🔍</text>
           <input
-            class="input-field"
-            placeholder="例：深圳市腾讯计算机系统有限公司"
-            placeholder-style="color:#c8c8c8"
+            class="search-input"
+            placeholder="请输入企业全称"
+            placeholder-style="color:#b0b0b0"
             value="{{enterpriseName}}"
             confirm-type="search"
             bind:input="onInput"
-            bind:focus="onFocus"
-            bind:blur="onBlur"
             bind:confirm="onSearch"
             maxlength="100"
           />
-          <text wx:if="{{enterpriseName && !loading}}" class="input-clear" bind:tap="onClear">✕</text>
+          <text wx:if="{{enterpriseName && !loading}}" class="search-clear" bind:tap="onClear">✕</text>
+          <button
+            class="search-btn {{!enterpriseName || loading ? 'disabled' : ''}}"
+            disabled="{{!enterpriseName || loading}}"
+            loading="{{loading}}"
+            size="mini"
+            bind:tap="onSearch"
+          >查询</button>
         </view>
-        <button
-          class="form-btn {{!enterpriseName || loading ? 'disabled' : ''}}"
-          disabled="{{!enterpriseName || loading}}"
-          loading="{{loading}}"
-          bind:tap="onSearch"
-        >{{loading ? '规划中...' : '开始规划'}}</button>
       </view>
 
-      <!-- 来源 -->
-      <view class="source" wx:if="{{!hasResult}}">
-        <text>🔒 数据来源：深圳工信局 · 科创委 · 人社局</text>
-      </view>
-
+      <!-- 加载 -->
       <view wx:if="{{loading}}" class="loading-wrap">
         <view class="loading-bar"></view>
-        <text>正在匹配可申报政策...</text>
+        <text>正在为您匹配可申报政策...</text>
       </view>
 
+      <!-- 错误 -->
       <view wx:if="{{errorMsg && !loading}}" class="error-wrap">
         <text>{{errorMsg}}</text>
-        <text class="retry" bind:tap="onSearch">重新规划</text>
+        <text class="retry" bind:tap="onSearch">重新查询</text>
       </view>
     </view>
   </view>
 
   <!-- 结果 -->
   <view wx:if="{{result && !loading && !errorMsg}}" class="result">
-    <!-- 头部 -->
     <view class="result-head">
       <text class="rh-title">申报规划书</text>
       <text class="rh-company">{{result.enterprise.name}}</text>
@@ -65,7 +64,6 @@
       </view>
     </view>
 
-    <!-- 列表 -->
     <view class="card" wx:for="{{result.plan.items}}" wx:key="policyName" wx:for-index="idx">
       <view class="card-index">{{idx + 1}}</view>
       <view class="card-body">

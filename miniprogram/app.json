@@ -3,10 +3,10 @@
     "pages/index/index"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#FFFFFF",
-    "navigationBarTitleText": "企业申报规划书",
-    "navigationBarTextStyle": "black",
-    "backgroundColor": "#F5F5F5"
+    "navigationBarBackgroundColor": "#2979FF",
+    "navigationBarTitleText": "博友政策咨询",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F7F8F9"
   },
   "sitemapLocation": "sitemap.json"
 }

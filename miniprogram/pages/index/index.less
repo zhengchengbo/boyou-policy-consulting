@@ -1,79 +1,78 @@
-// ====== 百度风格 - 大搜索居中 ======
+// ====== 百度风格 - 全屏居中搜索 ======
 .page {
   min-height: 100vh;
-  background: #f5f6f8;
-  padding-bottom: 40rpx;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-// ====== 搜索区 ======
+// ====== 搜索区：绝对垂直居中 ======
 .hero {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 90vh;
-  padding: 0 40rpx;
-  transition: all .3s;
+  width: 100%;
+  padding: 0 48rpx;
 
   &.compact {
-    min-height: auto;
-    padding-top: 80rpx;
+    flex: none;
+    padding-top: 60rpx;
     padding-bottom: 24rpx;
   }
 }
 
 .hero-inner {
   width: 100%;
-  max-width: 650rpx;
+  max-width: 600rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-// 品牌
+// 品牌（百度风格）
 .logo-area {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 40rpx;
+  margin-bottom: 36rpx;
 
   .logo-text {
-    font-size: 56rpx;
+    font-size: 52rpx;
     font-weight: 700;
     color: #1a73e8;
-    letter-spacing: 8rpx;
-    margin-bottom: 12rpx;
+    letter-spacing: 6rpx;
+    margin-bottom: 10rpx;
   }
   .logo-sub {
-    font-size: 26rpx;
-    color: #999;
+    font-size: 24rpx;
+    color: #bbb;
   }
 }
 
-// 搜索框（仿百度）
-.search-wrap {
-  width: 100%;
-}
-
+// 搜索框
 .search-box {
+  width: 100%;
   display: flex;
   align-items: center;
-  background: #fff;
-  border: 2rpx solid #d0d0d0;
+  border: 2rpx solid #ddd;
   border-radius: 50rpx;
   padding: 4rpx;
   transition: all .2s;
+  background: #fff;
 
   &.focus {
     border-color: #4a90ff;
-    box-shadow: 0 0 0 4rpx rgba(74,144,255,.15);
+    box-shadow: 0 0 0 4rpx rgba(74,144,255,.12);
   }
 }
 
 .search-input {
   flex: 1;
-  height: 88rpx;
-  line-height: 88rpx;
-  font-size: 32rpx;
+  height: 84rpx;
+  line-height: 84rpx;
+  font-size: 30rpx;
   color: #333;
   padding-left: 28rpx;
 }
@@ -81,45 +80,42 @@
 .search-clear {
   padding: 0 16rpx;
   color: #bbb;
-  font-size: 32rpx;
+  font-size: 30rpx;
 }
 
 .search-btn {
   flex-shrink: 0;
-  width: 140rpx;
-  height: 76rpx;
-  line-height: 76rpx;
+  width: 130rpx;
+  height: 72rpx;
+  line-height: 72rpx;
   text-align: center;
   background: #1a73e8;
   color: #fff;
-  font-size: 30rpx;
+  font-size: 28rpx;
   font-weight: 500;
   border-radius: 40rpx;
   margin: 6rpx;
   border: none;
 
-  &.disabled {
-    background: #a0c4ff;
-  }
   &[disabled] {
     background: #a0c4ff;
   }
 }
 
-// 加载
+// 加载动画
 .loading-wrap {
+  margin-top: 36rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16rpx;
-  margin-top: 40rpx;
-  font-size: 26rpx;
+  font-size: 24rpx;
   color: #999;
 
   .loading-bar {
     width: 200rpx;
     height: 4rpx;
-    background: #e8e8e8;
+    background: #eee;
     border-radius: 4rpx;
     overflow: hidden;
     position: relative;
@@ -144,51 +140,35 @@
 
 // 错误
 .error-wrap {
-  margin-top: 32rpx;
-  font-size: 26rpx;
+  margin-top: 28rpx;
+  font-size: 24rpx;
   color: #e74c3c;
 
   .retry {
     color: #1a73e8;
     margin-left: 12rpx;
-    text-decoration: underline;
   }
 }
 
-// ====== 结果 ======
+// ====== 结果区 ======
 .result-area {
-  padding: 0 28rpx;
+  width: 100%;
+  padding: 0 28rpx 40rpx;
 }
 
 .result-head {
-  background: linear-gradient(135deg, #1a73e8 0%, #5a9eff 100%);
+  background: linear-gradient(135deg, #1a73e8, #5a9eff);
   border-radius: 20rpx;
-  padding: 36rpx 28rpx;
+  padding: 32rpx 24rpx;
   margin-bottom: 24rpx;
   color: #fff;
 
-  .rh-title {
-    font-size: 34rpx;
-    font-weight: 700;
-    display: block;
-    margin-bottom: 8rpx;
-  }
-  .rh-company {
-    font-size: 28rpx;
-    opacity: .9;
-    display: block;
-    margin-bottom: 14rpx;
-  }
-  .rh-stat {
-    display: flex;
-    gap: 10rpx;
-    font-size: 24rpx;
-    opacity: .75;
-  }
+  .rh-title { font-size: 32rpx; font-weight: 700; display: block; margin-bottom: 8rpx; }
+  .rh-company { font-size: 26rpx; opacity: .9; display: block; margin-bottom: 12rpx; }
+  .rh-stat { display: flex; gap: 10rpx; font-size: 22rpx; opacity: .75; }
   .rh-dot { opacity: .5; }
 }
 
-// 卡片
 .card {
   display: flex;
   background: #fff;
@@ -199,10 +179,10 @@
 }
 
 .card-left {
-  width: 48rpx;
+  width: 44rpx;
   background: #1a73e8;
   color: #fff;
-  font-size: 28rpx;
+  font-size: 26rpx;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -221,55 +201,18 @@
   align-items: flex-start;
   margin-bottom: 10rpx;
 
-  .card-name {
-    flex: 1;
-    font-size: 28rpx;
-    font-weight: 600;
-    color: #222;
-    line-height: 1.4;
-  }
-  .card-money {
-    flex-shrink: 0;
-    font-size: 24rpx;
-    font-weight: 700;
-    color: #e74c3c;
-    background: #fff1f0;
-    padding: 4rpx 14rpx;
-    border-radius: 8rpx;
-    margin-left: 12rpx;
-    white-space: nowrap;
-  }
+  .card-name { flex:1; font-size: 28rpx; font-weight: 600; color: #222; line-height: 1.4; }
+  .card-money { flex-shrink:0; font-size: 22rpx; font-weight: 700; color: #e74c3c; background: #fff1f0; padding: 4rpx 12rpx; border-radius: 8rpx; margin-left: 12rpx; white-space: nowrap; }
 }
 
-.card-line {
-  display: block;
-  font-size: 24rpx;
-  color: #999;
-  line-height: 1.7;
-}
-
-.card-tag {
-  display: block;
-  font-size: 24rpx;
-  color: #389e0d;
-  background: #f6ffed;
-  padding: 8rpx 14rpx;
-  border-radius: 8rpx;
-  margin: 10rpx 0;
-  line-height: 1.5;
-}
+.card-line { display: block; font-size: 24rpx; color: #999; line-height: 1.7; }
+.card-tag { display: block; font-size: 24rpx; color: #389e0d; background: #f6ffed; padding: 8rpx 14rpx; border-radius: 8rpx; margin: 10rpx 0; line-height: 1.5; }
 
 .card-steps {
   background: #f5f6f8;
   border-radius: 8rpx;
   padding: 12rpx 14rpx;
-
-  .step {
-    display: block;
-    font-size: 24rpx;
-    color: #333;
-    line-height: 1.8;
-  }
+  .step { display: block; font-size: 24rpx; color: #333; line-height: 1.8; }
 }
 
 .footer {

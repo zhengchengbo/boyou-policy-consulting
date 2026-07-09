@@ -3,10 +3,11 @@
     "pages/index/index"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#1677FF",
+    "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTitleText": "博友政策咨询",
-    "navigationBarTextStyle": "white",
-    "backgroundColor": "#F5F5F5"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F5F5F5",
+    "navigationStyle": "custom"
   },
   "sitemapLocation": "sitemap.json"
 }

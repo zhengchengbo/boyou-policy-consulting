@@ -1,10 +1,14 @@
-// ====== 正式版 ======
+// ====== 简洁工具风 — 配色取自Logo ======
+// 主色: #0091DB (亮蓝) → #22B573 (青绿) 渐变
+// 背景: #F5F6F7
+// 文字: #1A1A1A / #666 / #999
+
 .page {
   min-height: 100vh;
-  background: #f7f8f9;
+  background: #f5f6f7;
 }
 
-// ====== 搜索区（垂直居中） ======
+// ====== 搜索区 ======
 .hero {
   display: flex;
   align-items: center;
@@ -13,84 +17,89 @@
   padding: 0 40rpx;
   transition: all .3s;
 
-  &.compact {
+  &.pinned {
     min-height: auto;
-    padding-top: 40rpx;
-    padding-bottom: 20rpx;
+    padding: 40rpx 40rpx 20rpx;
   }
 }
 
 .hero-inner {
   width: 100%;
-  max-width: 580rpx;
+  max-width: 560rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-// 圆形图标
-.icon-circle {
-  width: 120rpx;
-  height: 120rpx;
+// Logo 圆形图标
+.logo-circle {
+  width: 108rpx;
+  height: 108rpx;
   border-radius: 50%;
-  background: #2979FF;
+  background: linear-gradient(135deg, #22B573, #0091DB);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 28rpx;
-  box-shadow: 0 8rpx 24rpx rgba(41,121,255,.25);
+  margin-bottom: 24rpx;
+  box-shadow: 0 6rpx 20rpx rgba(0,145,219,.2);
 }
 
-.icon-img {
-  width: 56rpx;
-  height: 56rpx;
+.logo-letter {
+  font-size: 52rpx;
+  font-weight: 700;
+  color: #fff;
+  font-family: 'PingFang SC', sans-serif;
 }
 
-// 品牌
-.brand {
+// 标题
+.title-group {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 36rpx;
-
-  .brand-title {
-    font-size: 40rpx;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 10rpx;
-  }
-  .brand-desc {
-    font-size: 26rpx;
-    color: #999;
-    text-align: center;
-  }
 }
 
-// 搜索卡片
+.title-main {
+  font-size: 38rpx;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 8rpx;
+  letter-spacing: 2rpx;
+}
+
+.title-sub {
+  font-size: 26rpx;
+  color: #999;
+}
+
+// 搜索卡片（仿iOS风格）
 .search-card {
   width: 100%;
+  display: flex;
+  align-items: center;
   background: #fff;
-  border-radius: 16rpx;
-  padding: 8rpx 12rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0,0,0,.06);
+  border-radius: 24rpx;
+  padding: 6rpx 6rpx 6rpx 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,.04);
+  border: 1rpx solid #eee;
 }
 
-.search-row {
+.search-body {
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 12rpx;
 }
 
 .search-icon {
-  font-size: 32rpx;
-  color: #2979FF;
+  font-size: 30rpx;
   flex-shrink: 0;
 }
 
 .search-input {
   flex: 1;
-  height: 72rpx;
-  line-height: 72rpx;
+  height: 76rpx;
+  line-height: 76rpx;
   font-size: 28rpx;
   color: #333;
 }
@@ -98,73 +107,70 @@
 .search-clear {
   font-size: 28rpx;
   color: #bbb;
-  padding: 0 8rpx;
+  padding: 0 12rpx;
   flex-shrink: 0;
 }
 
 .search-btn {
   flex-shrink: 0;
-  background: #2979FF;
+  height: 64rpx;
+  line-height: 64rpx;
+  padding: 0 32rpx;
+  background: #0091DB;
   color: #fff;
-  font-size: 26rpx;
-  height: 60rpx;
-  line-height: 60rpx;
-  padding: 0 28rpx;
-  border-radius: 10rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  border-radius: 18rpx;
   border: none;
 
-  &.disabled {
-    background: #d0d8e8;
-  }
-  &[disabled] {
-    background: #d0d8e8;
-  }
+  &.disabled { background: #c8d6e5; }
+  &[disabled] { background: #c8d6e5; }
 }
 
 // 加载
 .loading-wrap {
-  margin-top: 36rpx;
+  margin-top: 32rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14rpx;
-  font-size: 26rpx;
+  gap: 12rpx;
+  font-size: 24rpx;
   color: #999;
 }
-.loading-bar { width: 200rpx; height: 4rpx; background: #eee; border-radius: 4rpx; overflow: hidden; position: relative; }
-.loading-bar::after { content: ''; position: absolute; top: 0; left: -50%; width: 50%; height: 100%; background: #2979FF; border-radius: 4rpx; animation: bar 1.2s ease infinite; }
-@keyframes bar { 0% { left: -50%; width: 50%; } 50% { width: 30%; } 100% { left: 100%; width: 50%; } }
+.loading-bar { width: 160rpx; height: 3rpx; background: #e8e8e8; border-radius: 3rpx; overflow: hidden; }
+.loading-bar::after { content: ''; display: block; width: 40%; height: 100%; background: #0091DB; border-radius: 3rpx; animation: load 1s ease infinite; }
+@keyframes load { 0% { margin-left: -40%; } 100% { margin-left: 100%; } }
 
-.error-wrap { margin-top: 24rpx; font-size: 26rpx; color: #e74c3c; .retry { color: #2979FF; margin-left: 12rpx; } }
+.error-wrap { margin-top: 24rpx; font-size: 26rpx; color: #e74c3c; .retry { color: #0091DB; margin-left: 12rpx; } }
 
 // ====== 结果 ======
 .result { padding: 0 28rpx 40rpx; }
 
 .result-head {
-  background: linear-gradient(135deg, #2979FF, #5a9eff);
+  background: linear-gradient(135deg, #22B573, #0091DB);
   border-radius: 20rpx;
   padding: 32rpx 24rpx;
   margin-bottom: 24rpx;
   color: #fff;
-  .rh-title { font-size: 32rpx; font-weight: 700; display: block; margin-bottom: 6rpx; }
+  .rh-title { font-size: 32rpx; font-weight: 600; display: block; letter-spacing: 2rpx; margin-bottom: 8rpx; }
   .rh-company { font-size: 26rpx; opacity: .9; display: block; margin-bottom: 12rpx; }
-  .rh-stat { display: flex; gap: 10rpx; font-size: 24rpx; opacity: .85; }
+  .rh-stats { display: flex; gap: 10rpx; font-size: 24rpx; opacity: .85; }
   .rh-dot { opacity: .5; }
-  .rh-num { font-weight: 700; font-size: 28rpx; }
+  .rh-num { font-weight: 600; font-size: 28rpx; }
 }
 
 .card {
   display: flex; background: #fff; border-radius: 16rpx;
   overflow: hidden; margin-bottom: 16rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,.04);
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,.03);
 }
-.card-index { width: 44rpx; background: #2979FF; color: #fff; font-size: 26rpx; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.card-idx { width: 44rpx; background: #0091DB; color: #fff; font-size: 26rpx; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .card-body { flex: 1; padding: 20rpx 24rpx; }
-.card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10rpx; }
-.card-name { flex:1; font-size: 28rpx; font-weight: 600; color: #222; line-height: 1.4; }
-.card-amount { flex-shrink:0; font-size: 24rpx; font-weight: 700; color: #e74c3c; background: #fff1f0; padding: 4rpx 14rpx; border-radius: 8rpx; margin-left: 12rpx; white-space: nowrap; }
-.card-meta { display: block; font-size: 24rpx; color: #999; line-height: 1.7; }
-.card-match { display: block; font-size: 24rpx; color: #389e0d; background: #f6ffed; padding: 8rpx 14rpx; border-radius: 8rpx; margin: 10rpx 0; line-height: 1.5; }
-.card-steps { background: #f5f6f8; border-radius: 8rpx; padding: 12rpx 14rpx; }
+.card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8rpx; }
+.card-name { flex:1; font-size: 28rpx; font-weight: 600; color: #1a1a1a; line-height: 1.4; }
+.card-amt { flex-shrink:0; font-size: 24rpx; font-weight: 600; color: #e74c3c; background: #fff1f0; padding: 4rpx 14rpx; border-radius: 8rpx; margin-left: 12rpx; white-space: nowrap; }
+.card-line { display: block; font-size: 24rpx; color: #999; line-height: 1.6; }
+.card-tag { display: block; font-size: 24rpx; color: #389e0d; background: #f6ffed; padding: 8rpx 14rpx; border-radius: 8rpx; margin: 8rpx 0; line-height: 1.4; }
+.card-steps { background: #f5f6f7; border-radius: 8rpx; padding: 12rpx 14rpx; }
 .step { display: block; font-size: 24rpx; color: #333; line-height: 1.8; }
 .footer { text-align: center; padding: 40rpx 28rpx 24rpx; font-size: 22rpx; color: #ccc; }

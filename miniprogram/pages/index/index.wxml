@@ -1,21 +1,22 @@
-<!-- 博友政策咨询 — 百度风格搜索 -->
+<!-- 博友政策咨询 — 价值导向版 -->
 <view class="page">
-  <!-- 搜索区（始终大屏居中） -->
   <view class="hero {{hasResult ? 'compact' : ''}}">
     <view class="hero-inner">
-      <!-- 品牌 -->
-      <view class="logo-area" wx:if="{{!hasResult}}">
-        <text class="logo-text">博友</text>
-        <text class="logo-sub">企业政策红利挖掘者</text>
+      <!-- 价值主张 -->
+      <view class="value-prop" wx:if="{{!hasResult}}">
+        <text class="vp-icon">🏆</text>
+        <text class="vp-title">企业申报规划书</text>
+        <text class="vp-desc">输入企业名称，一键生成可申报的政策及补贴方案</text>
       </view>
 
-      <!-- 搜索框 -->
-      <view class="search-wrap">
-        <view class="search-box {{inputFocus ? 'focus' : ''}}">
+      <!-- 搜索卡片 -->
+      <view class="search-card">
+        <view class="sc-label">企业全称</view>
+        <view class="sc-input-row {{inputFocus ? 'focus' : ''}}">
           <input
-            class="search-input"
-            placeholder="输入企业名称，获取申报计划"
-            placeholder-style="color:#b0b0b0;font-size:16px"
+            class="sc-input"
+            placeholder="例：深圳市腾讯计算机系统有限公司"
+            placeholder-style="color:#c8c8c8;font-size:26rpx"
             value="{{enterpriseName}}"
             confirm-type="search"
             bind:input="onInput"
@@ -24,55 +25,55 @@
             bind:confirm="onSearch"
             maxlength="100"
           />
-          <view wx:if="{{enterpriseName && !loading}}" class="search-clear" bind:tap="onClear">
-            <text>✕</text>
-          </view>
-          <button
-            class="search-btn {{!enterpriseName || loading ? 'disabled' : ''}}"
-            disabled="{{!enterpriseName || loading}}"
-            loading="{{loading}}"
-            bind:tap="onSearch"
-          >{{loading ? '' : '查询'}}</button>
+          <text wx:if="{{enterpriseName && !loading}}" class="sc-clear" bind:tap="onClear">✕</text>
         </view>
+        <button
+          class="sc-btn {{!enterpriseName || loading ? 'disabled' : ''}}"
+          disabled="{{!enterpriseName || loading}}"
+          loading="{{loading}}"
+          bind:tap="onSearch"
+        >{{loading ? '生成中...' : '开始规划 →'}}</button>
+      </view>
+
+      <!-- 底部提示 -->
+      <view class="trust-badge" wx:if="{{!hasResult}}">
+        <text>🔒 数据来源：深圳市工信局 · 科创委 · 人社局</text>
       </view>
 
       <!-- 加载 -->
       <view wx:if="{{loading}}" class="loading-wrap">
         <view class="loading-bar"></view>
-        <text>正在分析企业信息...</text>
+        <text>正在分析企业资质，匹配补贴政策...</text>
       </view>
 
       <!-- 错误 -->
       <view wx:if="{{errorMsg && !loading}}" class="error-wrap">
         <text>{{errorMsg}}</text>
-        <text class="retry" bind:tap="onSearch">重新查询</text>
+        <text class="retry" bind:tap="onSearch">重新规划</text>
       </view>
     </view>
   </view>
 
   <!-- 结果 -->
   <view wx:if="{{result && !loading && !errorMsg}}" class="result-area">
-    <!-- 计划书头部 -->
     <view class="result-head">
-      <text class="rh-title">📋 申报计划书</text>
+      <text class="rh-title">📋 申报规划书</text>
       <text class="rh-company">{{result.enterprise.name}}</text>
       <view class="rh-stat">
-        <text>可申报 {{result.plan.totalPolicies}} 项</text>
+        <text>可申报 <text class="rh-num">{{result.plan.totalPolicies}}</text> 项</text>
         <text class="rh-dot">·</text>
-        <text>预估 {{result.plan.totalAmount}}</text>
+        <text>预估 <text class="rh-num">{{result.plan.totalAmount}}</text></text>
       </view>
     </view>
 
-    <!-- 政策列表 -->
     <view class="card" wx:for="{{result.plan.items}}" wx:key="policyName" wx:for-index="idx">
-      <view class="card-left">{{idx + 1}}</view>
+      <view class="card-num">{{idx + 1}}</view>
       <view class="card-body">
         <view class="card-head">
           <text class="card-name">{{item.policyName}}</text>
-          <text wx:if="{{item.amount}}" class="card-money">{{item.amount}}</text>
+          <text wx:if="{{item.amount}}" class="card-amt">{{item.amount}}</text>
         </view>
-        <text class="card-line">🏛 {{item.department}}</text>
-        <text class="card-line">⏰ {{item.deadline}}</text>
+        <text class="card-meta">🏛 {{item.department}} · ⏰ {{item.deadline}}</text>
         <text class="card-tag">✅ {{item.matchReason}}</text>
         <view wx:if="{{item.steps && item.steps.length}}" class="card-steps">
           <text wx:for="{{item.steps}}" wx:key="*this" wx:for-item="s" class="step">· {{s}}</text>
@@ -80,6 +81,6 @@
       </view>
     </view>
 
-    <view class="footer">以上基于深圳市现行政策，实际以官方最新通知为准</view>
+    <view class="footer">以上规划基于深圳市现行政策，实际以官方最新通知为准</view>
   </view>
 </view>

@@ -3,7 +3,7 @@
 // 统一处理 token、错误、loading
 // ============================================
 
-const BASE_URL = 'https://你的后端域名/api'; // TODO: 替换为陈艳强提供的真实地址
+const BASE_URL = 'https://www.boyouzc.com/api'; // 后端API地址 - 已配置Nginx反代到服务器
 
 interface RequestOptions {
   url: string;

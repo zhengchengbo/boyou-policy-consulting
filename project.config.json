@@ -38,6 +38,7 @@
   "libVersion": "3.9.0",
   "appid": "wx1b3f853496dd6236",
   "projectname": "boyou-policy-consulting",
+  "miniprogramRoot": "miniprogram/",
   "condition": {
     "search": {
       "current": -1,

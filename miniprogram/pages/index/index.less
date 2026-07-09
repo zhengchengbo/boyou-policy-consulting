@@ -1,362 +1,267 @@
 @import '../../styles/variables.less';
 
-// ====== 首页容器 ======
+// ====== 极简首页 ======
 .page-index {
   min-height: 100vh;
   background: @bg-color;
+  padding-bottom: 40rpx;
 }
 
-// ====== 初始状态：搜索区域居中 ======
-.search-hero {
+// ====== 搜索区域 ======
+.search-area {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 0 32rpx;
   min-height: 80vh;
-  padding: 0 @spacing-lg;
-  transition: all 0.3s ease;
+  transition: all 0.3s;
 
   &.has-result {
     min-height: auto;
-    padding-top: @spacing-lg;
+    padding-top: 48rpx;
     justify-content: flex-start;
   }
 }
 
-.hero-logo {
-  width: 160rpx;
-  height: 160rpx;
-  margin-bottom: @spacing-md;
-  background: linear-gradient(135deg, @primary-color, #69b1ff);
-  border-radius: 50%;
-  .flex-center();
-  font-size: 64rpx;
-  color: @white;
-  box-shadow: 0 8rpx 24rpx rgba(22, 119, 255, 0.25);
-}
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 48rpx;
 
-.hero-title {
-  font-size: @font-xl;
-  font-weight: 700;
-  color: @text-color;
-  margin-bottom: @spacing-xs;
-}
+  .brand-icon {
+    font-size: 72rpx;
+    margin-bottom: 16rpx;
+  }
 
-.hero-subtitle {
-  font-size: @font-sm;
-  color: @text-secondary;
-  margin-bottom: @spacing-lg;
+  .brand-name {
+    font-size: 40rpx;
+    font-weight: 700;
+    color: @text-color;
+    margin-bottom: 8rpx;
+  }
+
+  .brand-slogan {
+    font-size: 26rpx;
+    color: @text-secondary;
+  }
 }
 
 // ====== 搜索框 ======
 .search-box {
   width: 100%;
-  max-width: 600rpx;
+  max-width: 560rpx;
   display: flex;
   align-items: center;
   background: @white;
-  border-radius: @radius-lg;
-  padding: @spacing-sm @spacing-md;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  border-radius: 50rpx;
+  padding: 4rpx 4rpx 4rpx 28rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
   border: 2rpx solid @border-color;
-  transition: border-color 0.3s;
+  transition: all 0.3s;
 
   &.focused {
     border-color: @primary-color;
-    box-shadow: 0 4rpx 20rpx rgba(22, 119, 255, 0.15);
+    box-shadow: 0 4rpx 20rpx rgba(22, 119, 255, 0.12);
   }
-}
-
-.search-icon {
-  font-size: 36rpx;
-  margin-right: @spacing-sm;
-  color: @text-secondary;
 }
 
 .search-input {
   flex: 1;
-  font-size: @font-md;
+  font-size: 28rpx;
+  height: 72rpx;
+  line-height: 72rpx;
   color: @text-color;
-  height: 80rpx;
-  line-height: 80rpx;
 
   &::placeholder {
-    color: @text-secondary;
+    color: #bbb;
+    font-size: 26rpx;
   }
 }
 
 .search-clear {
-  font-size: 32rpx;
+  font-size: 28rpx;
   color: @text-secondary;
-  padding: @spacing-xs;
+  padding: 8rpx 12rpx;
 }
 
 .search-btn {
   flex-shrink: 0;
   background: @primary-color;
   color: @white;
-  font-size: @font-sm;
-  padding: @spacing-xs @spacing-md;
-  border-radius: @radius-md;
-  margin-left: @spacing-sm;
-  height: 60rpx;
-  line-height: 60rpx;
+  font-size: 26rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  padding: 0 32rpx;
+  border-radius: 40rpx;
   border: none;
 
-  &:disabled {
+  &[disabled] {
     background: #b3d4ff;
   }
 }
 
-// ====== 加载状态 ======
-.search-loading {
-  .flex-center();
-  flex-direction: column;
-  padding: @spacing-lg 0;
-  margin-top: @spacing-lg;
-
-  .loading-spinner {
-    width: 60rpx;
-    height: 60rpx;
-    border: 4rpx solid @border-color;
-    border-top-color: @primary-color;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
-  .loading-text {
-    margin-top: @spacing-md;
-    font-size: @font-sm;
-    color: @text-secondary;
-  }
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-// ====== 结果区域 ======
-.result-section {
-  padding: 0 @spacing-md @spacing-lg;
-}
-
-// 企业信息卡片
-.enterprise-card {
-  background: @white;
-  border-radius: @radius-md;
-  padding: @spacing-md;
-  margin-bottom: @spacing-md;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
-
-  .card-title {
-    font-size: @font-lg;
-    font-weight: 600;
-    color: @text-color;
-    margin-bottom: @spacing-md;
-    padding-bottom: @spacing-sm;
-    border-bottom: 1rpx solid @border-color;
-  }
-
-  .info-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: @spacing-sm;
-  }
-
-  .info-item {
-    width: calc(50% - 12rpx);
-    display: flex;
-    flex-direction: column;
-
-    .info-label {
-      font-size: @font-xs;
-      color: @text-secondary;
-      margin-bottom: 4rpx;
-    }
-
-    .info-value {
-      font-size: @font-sm;
-      color: @text-color;
-      .ellipsis();
-    }
-  }
-}
-
-// 规划概览
-.plan-summary {
+// ====== 错误提示 ======
+.error-tip {
+  text-align: center;
+  padding: 24rpx 32rpx;
+  font-size: 26rpx;
+  color: #ff4d4f;
   display: flex;
-  gap: @spacing-sm;
-  margin-bottom: @spacing-md;
+  justify-content: center;
+  align-items: center;
+  gap: 16rpx;
 
-  .summary-item {
-    flex: 1;
-    background: @white;
-    border-radius: @radius-md;
-    padding: @spacing-md;
-    text-align: center;
-    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+  .retry-link {
+    color: @primary-color;
+    text-decoration: underline;
+  }
+}
 
-    .summary-num {
-      font-size: 48rpx;
-      font-weight: 700;
-      color: @primary-color;
-      line-height: 1.2;
-    }
+// ====== 报告 ======
+.report {
+  padding: 0 24rpx;
+}
 
-    .summary-tag {
-      font-size: @font-xs;
-      color: @text-secondary;
-      margin-top: 4rpx;
+.report-header {
+  background: linear-gradient(135deg, @primary-color, #69b1ff);
+  border-radius: 16rpx;
+  padding: 32rpx 28rpx;
+  margin-bottom: 24rpx;
+  color: @white;
+
+  .report-title {
+    font-size: 32rpx;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 12rpx;
+  }
+
+  .report-enterprise {
+    font-size: 28rpx;
+    opacity: 0.95;
+    display: block;
+    margin-bottom: 16rpx;
+  }
+
+  .report-meta {
+    display: flex;
+    align-items: center;
+    gap: 12rpx;
+    font-size: 24rpx;
+    opacity: 0.8;
+
+    .meta-divider {
+      opacity: 0.5;
     }
   }
 }
 
-// 政策条款卡片
-.policy-item {
-  background: @white;
-  border-radius: @radius-md;
-  padding: @spacing-md;
-  margin-bottom: @spacing-sm;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
-  border-left: 6rpx solid @primary-color;
+// ====== 政策卡片 ======
+.policy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
 
-  .policy-header {
+.policy-card {
+  display: flex;
+  background: @white;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.policy-index {
+  width: 48rpx;
+  background: @primary-color;
+  color: @white;
+  font-size: 28rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.policy-body {
+  flex: 1;
+  padding: 20rpx 24rpx;
+
+  .policy-title-row {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: @spacing-sm;
+    margin-bottom: 12rpx;
 
     .policy-name {
       flex: 1;
-      font-size: @font-md;
+      font-size: 28rpx;
       font-weight: 600;
       color: @text-color;
       line-height: 1.4;
     }
 
-    .amount-tag {
+    .policy-amount {
       flex-shrink: 0;
-      font-size: @font-sm;
+      font-size: 24rpx;
       font-weight: 700;
-      color: @danger-color;
+      color: #ff4d4f;
       background: #fff1f0;
-      padding: 4rpx @spacing-sm;
-      border-radius: @radius-sm;
-      margin-left: @spacing-sm;
+      padding: 4rpx 12rpx;
+      border-radius: 8rpx;
+      margin-left: 12rpx;
+      white-space: nowrap;
     }
   }
 
-  .match-reason {
-    font-size: @font-sm;
-    color: #52c41a;
-    background: #f6ffed;
-    padding: @spacing-xs @spacing-sm;
-    border-radius: @radius-sm;
-    margin-bottom: @spacing-sm;
+  .policy-dept,
+  .policy-deadline,
+  .policy-match {
+    font-size: 24rpx;
+    color: @text-secondary;
+    margin-bottom: 6rpx;
     line-height: 1.5;
   }
 
-  .policy-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: @spacing-sm;
-    margin-bottom: @spacing-sm;
-
-    .meta-row {
-      font-size: @font-xs;
-      color: @text-secondary;
-      display: flex;
-      align-items: center;
-      gap: 4rpx;
-    }
-
-    .difficulty-tag {
-      padding: 2rpx @spacing-xs;
-      border-radius: @radius-sm;
-      font-size: 22rpx;
-
-      &.low { background: #f6ffed; color: #52c41a; }
-      &.mid { background: #fffbe6; color: #faad14; }
-      &.high { background: #fff1f0; color: #ff4d4f; }
-    }
+  .policy-match {
+    color: #52c41a;
+    background: #f6ffed;
+    padding: 6rpx 12rpx;
+    border-radius: 8rpx;
+    margin: 8rpx 0;
   }
 
-  // 申报步骤
-  .steps-section {
+  .policy-steps {
+    margin-top: 8rpx;
+    padding: 12rpx;
     background: @bg-color;
-    border-radius: @radius-sm;
-    padding: @spacing-sm;
-    margin-bottom: @spacing-sm;
+    border-radius: 8rpx;
 
-    .step-title {
-      font-size: @font-xs;
-      color: @text-secondary;
-      margin-bottom: @spacing-xs;
+    .step-item {
+      display: flex;
+      padding: 4rpx 0;
+      line-height: 1.5;
+
+      .step-dot {
+        color: @primary-color;
+        margin-right: 8rpx;
+        flex-shrink: 0;
+      }
+
+      .step-text {
+        font-size: 24rpx;
+        color: @text-color;
+      }
     }
-  }
-
-  .step-item {
-    display: flex;
-    align-items: center;
-    padding: 6rpx 0;
-
-    .step-dot {
-      width: 12rpx;
-      height: 12rpx;
-      background: @primary-color;
-      border-radius: 50%;
-      margin-right: @spacing-sm;
-      flex-shrink: 0;
-    }
-
-    .step-text {
-      font-size: @font-sm;
-      color: @text-color;
-    }
-  }
-
-  .policy-link {
-    font-size: @font-xs;
-    color: @primary-color;
-    text-align: right;
-    display: block;
   }
 }
 
-// 底部提示
-.footer-tip {
+// ====== 底部 ======
+.report-footer {
   text-align: center;
-  padding: @spacing-lg;
-  font-size: @font-xs;
-  color: @text-secondary;
-}
-
-// 错误提示
-.error-card {
-  background: @white;
-  border-radius: @radius-md;
-  padding: @spacing-lg;
-  margin: @spacing-md;
-  text-align: center;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
-
-  .error-icon {
-    font-size: 80rpx;
-    margin-bottom: @spacing-md;
-  }
-
-  .error-text {
-    font-size: @font-sm;
-    color: @text-secondary;
-    margin-bottom: @spacing-md;
-  }
-
-  .retry-btn {
-    display: inline-block;
-    background: @primary-color;
-    color: @white;
-    padding: @spacing-xs @spacing-lg;
-    border-radius: @radius-md;
-    font-size: @font-sm;
-  }
+  padding: 48rpx 24rpx 24rpx;
+  font-size: 22rpx;
+  color: #bbb;
 }
